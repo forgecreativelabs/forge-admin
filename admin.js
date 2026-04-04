@@ -727,7 +727,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========================
     // SETTINGS
     // ========================
-    settingsToggle.addEventListener('click', () => settingsDrawer.classList.add('open'));
+    function adminRenderAccounts() {
+        const list = document.getElementById('admin-accounts-list');
+        if (!list) return;
+        const credentials = JSON.parse(localStorage.getItem('forge_credentials')) || {};
+        const vectors = Object.keys(credentials);
+        
+        if (vectors.length === 0) {
+            list.innerHTML = '<span style="color: rgba(255,255,255,0.3); font-size: 0.8rem; font-family: monospace;">NO CLIENTS REGISTERED.</span>';
+            return;
+        }
+
+        list.innerHTML = '';
+        vectors.forEach(v => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.justifyContent = 'space-between';
+            row.style.padding = '8px 12px';
+            row.style.background = 'rgba(255,255,255,0.02)';
+            row.style.border = '1px solid rgba(255,255,255,0.05)';
+            row.style.borderRadius = '8px';
+            row.style.alignItems = 'center';
+            row.innerHTML = `
+                <span style="font-family: monospace; font-size: 0.85rem; color: #fff;">[ ${v} ]</span>
+                <button class="danger-btn delete-acc-btn" data-vec="${v}">Delete</button>
+            `;
+            list.appendChild(row);
+        });
+
+        list.querySelectorAll('.delete-acc-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const vec = e.target.dataset.vec;
+                if (confirm(`PURGE RECORD FOR: ${vec}?`)) {
+                    delete credentials[vec];
+                    localStorage.setItem('forge_credentials', JSON.stringify(credentials));
+                    adminRenderAccounts();
+                }
+            });
+        });
+    }
+
+    settingsToggle.addEventListener('click', () => {
+        adminRenderAccounts();
+        settingsDrawer.classList.add('open');
+    });
     closeSettings.addEventListener('click', () => settingsDrawer.classList.remove('open'));
 
     if (clearDataBtn) {
