@@ -2164,22 +2164,23 @@ footer {
   
   body {
       background: #0b0c10 !important;
-      overflow: hidden !important;
-      height: 100vh;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      min-height: 100vh;
       width: 100vw;
   }
 
   .mobile-kill-switch {
       display: flex !important;
-      position: fixed;
-      inset: 0;
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
       z-index: 9999999;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 24px;
+      padding: 40px 16px;
       text-align: center;
-      overflow: hidden;
   }
 
   .mks-background-flare {
