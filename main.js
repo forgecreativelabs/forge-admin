@@ -1309,7 +1309,7 @@ const fbSendBtn = document.getElementById('fb-send-btn');
             commsFeed.innerHTML = '';
             
             thread.forEach(msg => {
-                if (msg.identity === 'Forge Admin') {
+                if (msg.identity !== 'COMMS_HUB_DIRECT') {
                     pushChatMessage('chat-bubble admin-bubble', msg);
                 } else {
                     pushChatMessage('chat-bubble user-bubble', msg);

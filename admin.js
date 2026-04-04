@@ -466,8 +466,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         chatFeed.innerHTML = '';
         thread.forEach((msg, idx) => {
-            const isAdmin = msg.identity && msg.identity !== selectedTicket;
-            const adminName = msg.identity || 'Unknown';
+            const isAdmin = msg.identity !== 'COMMS_HUB_DIRECT';
+            const adminName = isAdmin ? (msg.identity || 'Admin') : 'Client';
 
             const wrap = document.createElement('div');
             wrap.className = `msg-wrap ${isAdmin ? 'sent' : 'received'}`;
