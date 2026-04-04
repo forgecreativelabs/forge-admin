@@ -62,7 +62,7 @@ body {
 }
 
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
+  from { opacity: 0; transform: translateY(40px) scale(0.95); filter: none; }
   to   { opacity: 1; transform: none; filter: none; }
 }
 
@@ -567,8 +567,8 @@ body {
 }
 
 @keyframes slideFadeIn {
-  from { opacity: 0; transform: translateX(-20px); filter: blur(4px); }
-  to { opacity: 1; transform: translateX(0); filter: blur(0); }
+  from { opacity: 0; transform: translateX(-20px); filter: none; }
+  to { opacity: 1; transform: translateX(0); filter: none; }
 }
 
 .ticket-card:hover {
@@ -1416,7 +1416,6 @@ body {
   width: 360px;
   height: 100vh;
   background: rgba(10,10,12,0.98);
-  backdrop-filter: blur(20px);
   border-left: 1px solid rgba(255,255,255,0.06);
   z-index: 50;
   display: flex;
@@ -1568,18 +1567,21 @@ body {
   .ticket-client { font-size: 0.85rem; }
   .login-card { padding: 32px; }
 
-  /* Hardware Lag Mitigation: Remove filters completely */
-  .login-card {
-    animation-name: cardInFast !important;
+  /* Hardware Lag Mitigation: Force kill any remaining blurs across the DOM tree */
+  * {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+  
+  .login-card {
+    animation-name: cardInFast !important;
     background: rgba(20, 20, 25, 0.96) !important;
   }
 }
 
 @keyframes cardInFast {
-  from { opacity: 0; transform: translateY(20px); filter: none; }
-  to   { opacity: 1; transform: none; filter: none; }
+  from { opacity: 0; transform: translateY(20px); filter: none !important; }
+  to   { opacity: 1; transform: none; filter: none !important; }
 }
 
 @media (max-width: 768px) {
