@@ -139,28 +139,34 @@ function startRingtone(isIncoming) {
         ringerCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBlip() {
             if(!ringerCtx) return;
-            const freqs = isIncoming ? [440, 554] : [440];
-            const vol = isIncoming ? 0.08 : 0.03;
             
-            freqs.forEach(freq => {
+            // Modern Digital Dual-Chirp (Perfect Fifth jump: D5 -> A5)
+            const freqs = isIncoming ? [587.33, 880.00] : [440];
+            const vol = isIncoming ? 0.35 : 0.15; // Significantly louder volume
+            
+            freqs.forEach((freq, idx) => {
                 const osc = ringerCtx.createOscillator();
                 const gain = ringerCtx.createGain();
                 osc.connect(gain);
                 gain.connect(ringerCtx.destination);
                 
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, ringerCtx.currentTime);
+                osc.type = 'sine'; // Keeps it perfectly smooth and non-abrasive
                 
-                gain.gain.setValueAtTime(0, ringerCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(vol, ringerCtx.currentTime + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.001, ringerCtx.currentTime + (isIncoming ? 1.2 : 0.6));
+                const timeOffset = isIncoming ? (idx * 0.15) : 0; // Stagger the chirp
                 
-                osc.start(ringerCtx.currentTime);
-                osc.stop(ringerCtx.currentTime + 2);
+                osc.frequency.setValueAtTime(freq, ringerCtx.currentTime + timeOffset);
+                
+                // Volume ADSR curve
+                gain.gain.setValueAtTime(0, ringerCtx.currentTime + timeOffset);
+                gain.gain.linearRampToValueAtTime(vol, ringerCtx.currentTime + timeOffset + 0.02); // Fast attack
+                gain.gain.exponentialRampToValueAtTime(0.001, ringerCtx.currentTime + timeOffset + 0.5); // Smooth ambient decay
+                
+                osc.start(ringerCtx.currentTime + timeOffset);
+                osc.stop(ringerCtx.currentTime + timeOffset + 0.6);
             });
         }
         playBlip();
-        ringerInterval = setInterval(playBlip, 2500);
+        ringerInterval = setInterval(playBlip, 2000); // Tighter dial interval
     } catch(e) {}
 }
 

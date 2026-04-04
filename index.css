@@ -2152,4 +2152,12 @@ footer {
   .social-float-btn { width: 40px; height: 40px; }
   .social-float-btn svg { width: 20px; height: 20px; }
   .tg-float svg { width: 30px; height: 30px; }
+
+  /* Mobile Auth Redirection */
+  #auth-login-view, #auth-register-view { 
+      display: none !important; 
+  }
+  #auth-mobile-blocked-view { 
+      display: flex !important; 
+  }
 }

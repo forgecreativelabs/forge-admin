@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    /* --- HARD RESET COMMAND ---
+     * Deletes all local user accounts registered from previous tests.
+     * You can remove or comment out this line once you confirm the accounts are clear.
+     */
+    localStorage.removeItem('forge_credentials');
     // --- Aesthetic Enhancements ---
     // 1. Ambient Cursor Flare
     const cursorFlare = document.createElement('div');
@@ -827,7 +833,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Handle Reg Subs
     if (registerForm) {
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -835,17 +840,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const pass1 = document.getElementById('reg-pass').value;
             const pass2 = document.getElementById('reg-pass-confirm').value;
             const vector = document.getElementById('reg-nom').value.trim() || 'UNKNOWN_OP';
+            const passInput = document.getElementById('reg-pass-confirm');
+            const vectorInput = document.getElementById('reg-nom');
+            
+            // Clean slate
+            passInput.style.borderColor = '';
+            vectorInput.style.borderColor = '';
             
             if (pass1 !== pass2) {
-                const passInput = document.getElementById('reg-pass-confirm');
                 passInput.style.borderColor = 'var(--error)';
                 passInput.value = '';
                 passInput.placeholder = 'Passwords do not match';
                 return;
             }
             
-            // Save simulated credentials
+            // Fetch credentials DB
             const credentials = JSON.parse(localStorage.getItem('forge_credentials')) || {};
+            
+            // Check for duplication
+            if (credentials[vector]) {
+                vectorInput.style.borderColor = 'var(--error)';
+                vectorInput.value = '';
+                vectorInput.placeholder = 'Username is already taken';
+                return;
+            }
+
+            // Save new credentials
             credentials[vector] = pass1;
             localStorage.setItem('forge_credentials', JSON.stringify(credentials));
             
