@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORGE | Command Center</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-grid"></div>
+        <div class="login-card">
+            <div class="login-brand">FORGE<span class="accent">_</span></div>
+            <p class="login-subtitle">Command Center</p>
+            
+            <div class="login-fields">
+                <div class="field-group">
+                    <label class="field-label">Username</label>
+                    <input type="text" id="login-user" class="field-input" placeholder="Enter username" autocomplete="off" autofocus>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Password</label>
+                    <input type="password" id="login-pass" class="field-input" placeholder="Enter password">
+                </div>
+                <div id="login-error" class="login-error"></div>
+                <button id="login-btn" class="login-btn">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app" style="display: none;">
+        
+        <!-- Border Neon Light Trail Wrapper -->
+        <div class="app-border-trail">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Micro Navigation Rail -->
+        <nav class="micro-sidebar">
+            <div class="micro-brand">FORGE<span class="accent">_</span></div>
+            <div class="micro-icons">
+                <button class="micro-btn active" id="view-pending" title="Pending Tickets">⏱</button>
+                <button class="micro-btn" id="view-accepted" title="Active Chats">💬</button>
+                <button class="micro-btn" id="view-archive" title="Archived">🗃</button>
+            </div>
+            <div class="micro-footer">
+                <button class="micro-btn" id="settings-toggle" title="Settings">⚙</button>
+                <button class="micro-btn" id="logout-btn" title="Sign Out" style="color:#ef4444;">→</button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="padding: 24px 20px 0px 20px; flex-shrink: 0;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #fff;">Messages</div>
+                    <div id="current-user-display" style="font-size: 0.75rem; color: rgba(255,255,255,0.3);"></div>
+                </div>
+                <!-- Active Admin Bubbles (Instagram story style) -->
+                <div id="online-admins" class="story-row"></div>
+            </div>
+            <div id="tickets-container" class="ticket-list"></div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-area" id="chat-area">
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state">
+                <div class="empty-visual">
+                    <div class="empty-ring"></div>
+                    <div class="empty-ring r2"></div>
+                    <div class="empty-ring r3"></div>
+                    <div class="empty-diamond">◇</div>
+                </div>
+                <p class="empty-text">Select a ticket to start a conversation</p>
+                <p class="empty-sub" id="empty-stats"></p>
+            </div>
+
+            <!-- Active Chat -->
+            <div class="chat-pane" id="chat-pane" style="display: none;">
+                <div class="chat-topbar">
+                    <div class="chat-topbar-left">
+                        <div class="chat-avatar" id="chat-avatar">?</div>
+                        <div>
+                            <div class="chat-name" id="chat-name">—</div>
+                            <div class="chat-meta" id="chat-meta">—</div>
+                        </div>
+                    </div>
+                    <div class="chat-topbar-right">
+                        <div id="admin-progress-tabs" class="progress-tabs">
+                            <button class="progress-tab" data-val="0">Not Started</button>
+                            <button class="progress-tab" data-val="1">In Progress</button>
+                            <button class="progress-tab" data-val="2">Review</button>
+                            <button class="progress-tab" data-val="3">Completed</button>
+                        </div>
+                        <button class="topbar-btn" id="call-btn" title="Voice Call">📞</button>
+                    </div>
+                </div>
+
+                <!-- Voice Call Overlay -->
+                <div id="call-overlay" class="call-overlay">
+                    <div class="call-panes">
+                        <div class="call-pane-top">
+                            <div class="large-avatar pulse-avatar" id="call-client-avatar">?</div>
+                            <div class="large-avatar-name" id="call-client-name">CLASSIFIED UPLINK</div>
+                        </div>
+                        <div class="call-pane-bottom">
+                            <div class="decor-image">🎙️</div>
+                            <div id="call-status-text" class="call-status-text">INCOMING VOICE UPLINK</div>
+                            <div class="voice-bars" id="call-voice-bars">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Discord-style dock -->
+                    <div id="call-dock" class="call-dock">
+                        <div id="call-extras" class="call-extras" style="display:none;">
+                            <button class="dock-circle-btn" id="call-mute-toggle" title="Toggle Microphone">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+                            </button>
+                            <button class="dock-circle-btn" id="call-speaker-toggle" title="Toggle Speaker">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                            </button>
+                        </div>
+                        <div id="call-controls" class="call-controls">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-feed" id="chat-feed"></div>
+
+                <div class="chat-composer" id="chat-composer">
+                    <button id="attach-btn" class="composer-btn" title="Attach">📎</button>
+                    <input type="file" id="file-input" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
+                    <input type="text" id="chat-input" class="composer-input" placeholder="Type a message...">
+                    <button id="voice-btn" class="composer-btn" title="Voice Note">🎤</button>
+                    <button id="send-btn" class="composer-send">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </button>
+                </div>
+
+                <!-- Recording Overlay -->
+                <div id="recording-overlay" class="recording-bar">
+                    <div class="rec-left">
+                        <div class="rec-dot"></div>
+                        <span>Recording</span>
+                    </div>
+                    <div class="rec-timer" id="rec-timer">0:00</div>
+                    <div class="rec-right">
+                        <button id="cancel-voice" class="rec-cancel">Cancel</button>
+                        <button id="send-voice" class="rec-send">Send</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Drawer -->
+        <div id="settings-drawer" class="settings-drawer">
+            <div class="settings-header">
+                <h2 class="section-title">Settings</h2>
+                <button id="close-settings" class="topbar-btn">✕</button>
+            </div>
+            <div class="settings-body">
+                <div class="settings-group">
+                    <div class="settings-label-text">NOTIFICATIONS</div>
+                    <div class="settings-row">
+                        <span>Sound alerts</span>
+                        <label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label>
+                    </div>
+                    <div class="settings-row">
+                        <span>Desktop notifications</span>
+                        <label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-label-text">DATA</div>
+                    <div class="settings-row">
+                        <span>Clear all tickets</span>
+                        <button class="danger-btn" id="clear-data">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
