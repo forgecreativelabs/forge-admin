@@ -1371,7 +1371,8 @@ footer {
   padding: 10px 14px;
   font-family: var(--font-body);
   font-size: 0.85rem;
-  max-width: 85%;
+  width: fit-content;
+  max-width: 90%;
   line-height: 1.4;
   border-radius: 12px !important;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);

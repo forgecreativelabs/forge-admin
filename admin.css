@@ -994,7 +994,8 @@ body {
   padding: 10px 16px;
   font-size: 0.95rem;
   line-height: 1.4;
-  max-width: 65%;
+  width: fit-content;
+  max-width: 85%;
   border-radius: 20px !important;
   word-wrap: break-word;
 }

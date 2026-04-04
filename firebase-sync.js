@@ -48,7 +48,7 @@ async function buildWebRTC_Caller(vector) {
         document.getElementById('forge-webrtc-audio').srcObject = event.streams[0];
     };
 
-    const callDoc = db.ref('rtc/' + vector);
+    const callDoc = db.ref('sync/rtc_' + vector);
     await callDoc.remove(); // Flush old states
 
     // Share IP route candidates
@@ -64,13 +64,13 @@ async function buildWebRTC_Caller(vector) {
     callDoc.child('answer').on('value', snapshot => {
         const answer = snapshot.val();
         if (answer && !rtcConnection.currentRemoteDescription) {
-            rtcConnection.setRemoteDescription(new RTCSessionDescription(answer));
+            rtcConnection.setRemoteDescription(new RTCSessionDescription(answer)).then(() => {
+                // Immune to Remote Description race conditions:
+                callDoc.child('calleeCandidates').on('child_added', snap => {
+                    rtcConnection.addIceCandidate(new RTCIceCandidate(snap.val()));
+                });
+            });
         }
-    });
-
-    // Listener for Callee's IP paths
-    callDoc.child('calleeCandidates').on('child_added', snapshot => {
-        rtcConnection.addIceCandidate(new RTCIceCandidate(snapshot.val()));
     });
 }
 
@@ -88,7 +88,7 @@ async function buildWebRTC_Callee(vector) {
         document.getElementById('forge-webrtc-audio').srcObject = event.streams[0];
     };
 
-    const callDoc = db.ref('rtc/' + vector);
+    const callDoc = db.ref('sync/rtc_' + vector);
 
     rtcConnection.onicecandidate = (event) => {
         if (event.candidate) callDoc.child('calleeCandidates').push(event.candidate.toJSON());
@@ -120,10 +120,59 @@ function handleWebRTC_EndCall(vector) {
     if (audioEl) audioEl.srcObject = null;
     
     // Purge active Database listeners for ICE relays
-    const callDoc = db.ref('rtc/' + vector);
+    const callDoc = db.ref('sync/rtc_' + vector);
     callDoc.child('answer').off();
     callDoc.child('calleeCandidates').off();
     callDoc.child('callerCandidates').off();
+}
+
+// ============================================
+// Synthetic Ringtone Generator
+// ============================================
+
+let ringerCtx = null;
+let ringerInterval = null;
+
+function startRingtone(isIncoming) {
+    if (ringerInterval) return;
+    try {
+        ringerCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBlip() {
+            if(!ringerCtx) return;
+            const freqs = isIncoming ? [440, 554] : [440];
+            const vol = isIncoming ? 0.08 : 0.03;
+            
+            freqs.forEach(freq => {
+                const osc = ringerCtx.createOscillator();
+                const gain = ringerCtx.createGain();
+                osc.connect(gain);
+                gain.connect(ringerCtx.destination);
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ringerCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0, ringerCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(vol, ringerCtx.currentTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, ringerCtx.currentTime + (isIncoming ? 1.2 : 0.6));
+                
+                osc.start(ringerCtx.currentTime);
+                osc.stop(ringerCtx.currentTime + 2);
+            });
+        }
+        playBlip();
+        ringerInterval = setInterval(playBlip, 2500);
+    } catch(e) {}
+}
+
+function stopRingtone() {
+    if (ringerInterval) {
+        clearInterval(ringerInterval);
+        ringerInterval = null;
+    }
+    if (ringerCtx) {
+        ringerCtx.close();
+        ringerCtx = null;
+    }
 }
 
 // ============================================
@@ -141,10 +190,13 @@ localStorage.setItem = function(key, value) {
         try {
             const callData = JSON.parse(value || '{}');
             if (callData.state === 'ringing' || callData.state === 'admin_ringing') {
+                startRingtone(false);
                 setTimeout(() => buildWebRTC_Caller(callData.vector), 300);
             } else if (callData.state === 'connected') {
+                stopRingtone();
                 setTimeout(() => buildWebRTC_Callee(callData.vector), 300);
             } else if (callData.state === 'ended' || callData.state === 'declined') {
+                stopRingtone();
                 handleWebRTC_EndCall(callData.vector);
             }
         } catch(e) {}
@@ -175,8 +227,13 @@ function handleRemoteState(snapshot) {
         if (key === 'forge_call_state' && value) {
             try {
                 const callData = JSON.parse(value);
-                if (callData.state === 'ended' || callData.state === 'declined') {
+                if (callData.state === 'ringing' || callData.state === 'admin_ringing') {
+                    startRingtone(true);
+                } else if (callData.state === 'ended' || callData.state === 'declined') {
+                    stopRingtone();
                     handleWebRTC_EndCall(callData.vector);
+                } else if (callData.state === 'connected') {
+                    stopRingtone();
                 }
             } catch(e) {}
         }
