@@ -1567,6 +1567,22 @@ body {
   .ticket-id { font-size: 0.75rem; }
   .ticket-client { font-size: 0.85rem; }
   .login-card { padding: 32px; }
+
+  /* Hardware Lag Mitigation: Remove filters & shorten animations */
+  * { 
+    animation-duration: 0.3s !important; 
+    transition-duration: 0.3s !important;
+  }
+  .login-card {
+    animation-name: cardInFast !important;
+    backdrop-filter: blur(4px) saturate(1) !important;
+    -webkit-backdrop-filter: blur(4px) saturate(1) !important;
+  }
+}
+
+@keyframes cardInFast {
+  from { opacity: 0; transform: translateY(20px); filter: none; }
+  to   { opacity: 1; transform: none; filter: none; }
 }
 
 @media (max-width: 768px) {
