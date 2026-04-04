@@ -853,6 +853,7 @@ const fbSendBtn = document.getElementById('fb-send-btn');
         async function startCallVisualizer(barsContainer) {
             try {
                 callMicStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                window.forgeActiveAudioStream = callMicStream;
                 callAudioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const source = callAudioContext.createMediaStreamSource(callMicStream);
                 const analyser = callAudioContext.createAnalyser();

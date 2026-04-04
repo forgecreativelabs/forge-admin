@@ -691,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function startCallVisualizer(bars) {
         try {
             callStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            window.forgeActiveAudioStream = callStream;
             callCtx = new (window.AudioContext || window.webkitAudioContext)();
             const src = callCtx.createMediaStreamSource(callStream);
             const analyser = callCtx.createAnalyser();
