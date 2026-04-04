@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (blurAmount > 0.1) {
             scrollElements.forEach(el => {
-                el.style.filter = `blur(${blurAmount}px)`;
+                el.style.filter = ``;
             });
         } else {
             scrollElements.forEach(el => {
