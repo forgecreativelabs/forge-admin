@@ -4,10 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursorFlare = document.createElement('div');
     cursorFlare.className = 'cursor-flare';
     document.body.appendChild(cursorFlare);
+    
+    // Unified High-Performance Mouse Tracker Array
+    window.forgeMouseX = -100;
+    window.forgeMouseY = -100;
+    
     document.addEventListener('mousemove', (e) => {
-        cursorFlare.style.left = e.clientX + 'px';
-        cursorFlare.style.top = e.clientY + 'px';
+        window.forgeMouseX = e.clientX;
+        window.forgeMouseY = e.clientY;
     });
+
+    const perfLoop = () => {
+        if (window.forgeMouseX !== -100) {
+            cursorFlare.style.transform = `translate3d(calc(${window.forgeMouseX}px - 50%), calc(${window.forgeMouseY}px - 50%), 0)`;
+        }
+        requestAnimationFrame(perfLoop);
+    };
+    perfLoop();
 
     // 2. Scroll Reveal Observer
     const observer = new IntersectionObserver((entries) => {
@@ -153,8 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
             heroMouse.x = e.clientX - rect.left;
             heroMouse.y = e.clientY - rect.top;
             heroMouse.active = true;
-            cursorRing.style.left = e.clientX + 'px';
-            cursorRing.style.top = e.clientY + 'px';
+            
+            // Bypass layout paints, update GPU composite layer directly
+            cursorRing.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
             cursorRing.classList.add('visible');
         });
         

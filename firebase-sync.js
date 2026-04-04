@@ -176,6 +176,72 @@ function stopRingtone() {
 }
 
 // ============================================
+// Call Duration & Chat Injection
+// ============================================
+
+let amICallOriginator = false;
+let callDurationInterval = null;
+let callDurationSeconds = 0;
+let callHasConnected = false;
+
+function formatTimeStr(s) {
+    const m = Math.floor(s / 60);
+    const secs = (s % 60).toString().padStart(2, '0');
+    return `${m}:${secs}`;
+}
+
+function startDurationTimer() {
+    callHasConnected = true;
+    callDurationSeconds = 0;
+    if (callDurationInterval) clearInterval(callDurationInterval);
+    
+    callDurationInterval = setInterval(() => {
+        callDurationSeconds++;
+        const fmt = formatTimeStr(callDurationSeconds);
+        const ct = document.getElementById('call-status-text');
+        if (ct) ct.innerText = `VOICE UPLINK ACTIVE - ${fmt}`;
+    }, 1000);
+}
+
+function stopDurationTimer() {
+    if (callDurationInterval) clearInterval(callDurationInterval);
+    callDurationInterval = null;
+}
+
+function injectSystemLog(vector) {
+    const durStr = formatTimeStr(callDurationSeconds);
+    let msg = callHasConnected ? `📞 Voice Call Ended (Duration: ${durStr})` : `📞 Missed Voice Call`;
+    
+    const stored = JSON.parse(localStorage.getItem('forge_briefings') || '[]');
+    const time = new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' });
+    
+    stored.push({
+        identity: 'System Bot',
+        vector: vector,
+        time: time,
+        type: 'text',
+        payload: msg
+    });
+    
+    const newVal = JSON.stringify(stored);
+    
+    // Write via proxy so it auto-syncs through firebase to the other client
+    originalSetItem('forge_briefings', newVal);
+    db.ref('sync/forge_briefings').set(newVal);
+    
+    // Dispatch local update
+    window.dispatchEvent(new StorageEvent('storage', {
+        key: 'forge_briefings',
+        newValue: newVal,
+        storageArea: localStorage,
+        url: window.location.href
+    }));
+    
+    callHasConnected = false;
+    callDurationSeconds = 0;
+}
+
+// ============================================
 // MultiPlexer Event Bus
 // ============================================
 
@@ -190,14 +256,18 @@ localStorage.setItem = function(key, value) {
         try {
             const callData = JSON.parse(value || '{}');
             if (callData.state === 'ringing' || callData.state === 'admin_ringing') {
+                amICallOriginator = true;
                 startRingtone(false);
                 setTimeout(() => buildWebRTC_Caller(callData.vector), 300);
             } else if (callData.state === 'connected') {
                 stopRingtone();
+                startDurationTimer();
                 setTimeout(() => buildWebRTC_Callee(callData.vector), 300);
             } else if (callData.state === 'ended' || callData.state === 'declined') {
                 stopRingtone();
                 handleWebRTC_EndCall(callData.vector);
+                stopDurationTimer();
+                if (amICallOriginator) injectSystemLog(callData.vector);
             }
         } catch(e) {}
     }
@@ -228,12 +298,16 @@ function handleRemoteState(snapshot) {
             try {
                 const callData = JSON.parse(value);
                 if (callData.state === 'ringing' || callData.state === 'admin_ringing') {
+                    amICallOriginator = false;
                     startRingtone(true);
                 } else if (callData.state === 'ended' || callData.state === 'declined') {
                     stopRingtone();
                     handleWebRTC_EndCall(callData.vector);
+                    stopDurationTimer();
+                    if (amICallOriginator) injectSystemLog(callData.vector);
                 } else if (callData.state === 'connected') {
                     stopRingtone();
+                    startDurationTimer();
                 }
             } catch(e) {}
         }
