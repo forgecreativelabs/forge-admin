@@ -1569,10 +1569,6 @@ body {
   .login-card { padding: 32px; }
 
   /* Hardware Lag Mitigation: Remove filters completely */
-  * { 
-    animation-duration: 0.3s !important; 
-    transition-duration: 0.3s !important;
-  }
   .login-card {
     animation-name: cardInFast !important;
     backdrop-filter: none !important;

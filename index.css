@@ -2039,15 +2039,14 @@ footer {
   }
 
   /* HARDWARE LAG MITIGATION: Disable Heavy Motion Blur/Filters on Devices */
-  * { 
-    animation-duration: 0.3s !important; 
-    transition-duration: 0.3s !important;
-  }
-  .reveal-text, .glitch-text::before, .glitch-text::after, .card-shine, .data-card, .btn {
-    animation-duration: 0.4s !important;
-  }
+  /* Remove blur from text reveals */
   .reveal-text {
     animation-name: revealUpFast !important;
+  }
+  
+  /* Disable any ambient blur filters on fixed elements to prevent GPU throttling */
+  .abstract-glow, .hero-bg-image::before {
+    filter: none !important;
   }
   /* Removing persistent cursors which "teleport" lazily and lag on touch surfaces */
   .cursor-flare, .cursor-ring {
