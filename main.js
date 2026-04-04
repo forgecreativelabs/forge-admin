@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const vectorInput = document.getElementById('login-vector');
             const passInput = document.getElementById('login-pass');
-            const vector = vectorInput.value.trim();
+            const vector = vectorInput.value.trim().toLowerCase();
             const pass = passInput.value;
             
             // Fetch credentials from LocalStorage
@@ -839,7 +839,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const pass1 = document.getElementById('reg-pass').value;
             const pass2 = document.getElementById('reg-pass-confirm').value;
-            const vector = document.getElementById('reg-nom').value.trim() || 'UNKNOWN_OP';
+            let rawVector = document.getElementById('reg-nom').value.trim();
+            const vector = rawVector ? rawVector.toLowerCase() : 'unknown_op';
             const passInput = document.getElementById('reg-pass-confirm');
             const vectorInput = document.getElementById('reg-nom');
             
