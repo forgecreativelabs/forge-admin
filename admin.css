@@ -1568,15 +1568,16 @@ body {
   .ticket-client { font-size: 0.85rem; }
   .login-card { padding: 32px; }
 
-  /* Hardware Lag Mitigation: Remove filters & shorten animations */
+  /* Hardware Lag Mitigation: Remove filters completely */
   * { 
     animation-duration: 0.3s !important; 
     transition-duration: 0.3s !important;
   }
   .login-card {
     animation-name: cardInFast !important;
-    backdrop-filter: blur(4px) saturate(1) !important;
-    -webkit-backdrop-filter: blur(4px) saturate(1) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(20, 20, 25, 0.96) !important;
   }
 }
 
