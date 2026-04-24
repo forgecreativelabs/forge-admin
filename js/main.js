@@ -72,34 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollY = window.scrollY;
     });
 
-    // Contact Modal Logic
-    const contactModal = document.getElementById('contact-modal');
-    const openContactBtns = document.querySelectorAll('.open-contact-btn');
-    const closeContactBtn = document.getElementById('modal-close');
-
-    openContactBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            contactModal.classList.add('active');
-        });
-    });
-
-    closeContactBtn.addEventListener('click', () => {
-        contactModal.classList.remove('active');
-    });
-
-    contactModal.addEventListener('click', (e) => {
-        if (e.target === contactModal) {
-            contactModal.classList.remove('active');
-        }
-    });
-
-    // Set FormSubmit next URL to current page automatically
-    const nextInput = document.querySelector('input[name="_next"]');
-    if (nextInput) {
-        nextInput.value = window.location.href;
-    }
-
     // Toast Notification for "Work" Links
     const workLinks = document.querySelectorAll('a[href="#work"]');
     const toastContainer = document.getElementById('toast-container');

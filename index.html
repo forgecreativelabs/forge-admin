@@ -32,7 +32,7 @@
                 <a href="#work" class="nav-link">Work</a>
             </nav>
             <div class="nav-actions">
-                <a href="#" class="btn btn-primary open-contact-btn">Start a Project</a>
+                <a href="https://x.com/ForgeCreative26" target="_blank" class="btn btn-primary">Start a Project</a>
             </div>
         </div>
     </header>
@@ -159,7 +159,7 @@
                     <div class="cta-bg-fx"></div>
                     <h2 class="cta-title">READY TO BUILD SOMETHING EXCEPTIONAL?</h2>
                     <p class="cta-text">Stop settling for the standard. Let's engineer a digital experience that puts you in a hyper-competitive category of one.</p>
-                    <a href="#" class="btn btn-primary btn-large cta-btn open-contact-btn">Initiate Project</a>
+                    <a href="https://x.com/ForgeCreative26" target="_blank" class="btn btn-primary btn-large cta-btn">Initiate Project</a>
                 </div>
             </div>
         </section>
@@ -205,43 +205,6 @@
 
     <!-- Toast Notification -->
     <div id="toast-container" class="toast-container"></div>
-
-    <!-- Contact Modal -->
-    <div class="modal-overlay" id="contact-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <h2 class="modal-title">INITIATE CONNECTION</h2>
-            <p class="modal-desc">Provide your project parameters. This will be transmitted directly to our secure inbox.</p>
-            
-            <!-- Replace 'forgecreative26@gmail.com' with the actual Gmail address -->
-            <form action="https://formsubmit.co/forgecreative26@gmail.com" method="POST" class="contact-form">
-                <!-- Disable Captcha for smoother UX -->
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="New Project Inquiry - Forge Creative Labs">
-                <!-- Redirect back to the site instead of formsubmit default page -->
-                <input type="hidden" name="_next" value="">
-                
-                <div class="form-group">
-                    <label for="name">Name / Alias</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter your name">
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="your.email@system.tld">
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Project Parameters & Vision</label>
-                    <textarea id="message" name="message" required rows="5" placeholder="Describe the digital experience you want to forge..."></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-large btn-full">
-                    <span>Transmit Message</span>
-                </button>
-            </form>
-        </div>
-    </div>
 
     <script src="js/main.js"></script>
 </body>
