@@ -132,37 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // AJAX Contact Form Submission
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span>TRANSMITTING...</span>';
-
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: new FormData(contactForm),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    showToast('TRANSMISSION SUCCESSFUL.');
-                    contactForm.reset();
-                    contactModal.classList.remove('active');
-                } else {
-                    showToast('ERROR: ADDRESS DEACTIVATED OR REQUIRES CONFIRMATION.');
-                }
-            }).catch(error => {
-                showToast('NETWORK ERROR: TRANSMISSION FAILED.');
-            }).finally(() => {
-                submitBtn.innerHTML = originalBtnText;
-            });
-        });
-    }
-
     // WebGL / Canvas Background Setup
     initCanvasAnimation();
 });
