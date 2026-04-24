@@ -1,478 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORGE | Digital Fabrication</title>
-    <link rel="stylesheet" href="index.css">
-    <meta name="description" content="A high-performance instrument of digital fabrication. Welcome to FORGE.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Forge Creative Labs | Digital Precision</title>
+    <meta name="description" content="We build high-performance apps, sites, and digital experiences that exceed expectations. Bespoke development crafted with digital precision.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="level-0" style="cursor: crosshair;">
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="cursor-glow"></div>
 
-    <!-- GLOBAL MOBILE BARRICADE -->
-    <div class="mobile-kill-switch">
-        <div class="mks-background-flare"></div>
-        <div class="mks-content">
-            <div class="mks-icon">📱 <span style="color:var(--error); margin: 0 4px;">&#x2715;</span> ⚠️</div>
-            <h1 class="mks-title">SYSTEM INCOMPATIBLE</h1>
-            <p class="mks-desc">The Forge Client Portal and Advanced Communication Pipelines are strictly engineered for Desktop displays to maintain highest communication integrity.</p>
-            
-            <div class="mks-divider"></div>
-            
-            <p class="mks-action-text">Please transition to a PC/Desktop interface or connect with our engineering team directly via Mobile Portal:</p>
-            
-            <div class="mks-links-grid">
-                <a href="https://x.com/ForgeCreative26" target="_blank" class="mks-social-btn x-btn">
-                    <svg viewBox="0 0 512 512" fill="#fff" height="24" width="24"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.6 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-                    <span>Connect on X</span>
-                </a>
-                
-                <a href="https://www.facebook.com/profile.php?id=61560640321262" target="_blank" class="mks-social-btn fb-btn">
-                    <svg height="24" width="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    <span>Facebook Hub</span>
-                </a>
-                
-                <a href="https://t.me/Argon_xrpl" target="_blank" class="mks-social-btn tg-btn">
-                    <svg viewBox="0 0 240 240" fill="#fff" height="24" width="24"><path d="m98 175c-4 0-3-1-4-4l-11-37 87-54c4-2 8 1 5 4l-75 68v39l22-19 36 26c6 3 11 2 13-5l23-110c2-9-3-13-9-11l-140 54c-8 3-8 8-1 10l36 11 17 56z"/></svg>
-                    <span>Telegram Comm</span>
-                </a>
-                
-                <a href="https://wa.me/1234567890" target="_blank" class="mks-social-btn wa-btn">
-                    <svg viewBox="0 0 448 512" fill="#fff" height="24" width="24"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157.1zM224 430c-30.3 0-60.6-8.2-86.4-23.7l-6.2-3.7-64.2 16.8 17-62.6-4.1-6.5C63.8 322 54 289.4 54 254.9c0-93.7 76.5-170.2 170.2-170.2 45.4 0 88.1 17.7 120.2 49.8 32 32.1 49.7 74.8 49.7 120.2 0 93.8-76.5 170.3-170.1 170.3zm93.4-127.3c-5.1-2.6-30.3-15-35-16.7-4.7-1.7-8.1-2.6-11.5 2.6-3.4 5.1-13.2 16.7-16.2 20.1-3 3.4-6 3.8-11.1 1.3-29.4-14.7-49.3-26.6-69-59.6-1.9-3.2 1.9-2.9 6.8-12.7s11.5-16.2 13.2-19.6c1.7-3.4 .9-6.4-.4-9-1.3-2.6-11.5-27.8-15.8-38.1-4.1-10.2-8.3-8.8-11.5-9-3-.1-6.4-.1-9.8-.1s-8.9 1.3-13.6 6.4c-4.7 5.1-18 17.5-18 42.7s18.4 49.5 20.9 52.9c2.6 3.4 36.1 55.1 87.4 77.2 32.5 14 45.3 15.2 61.5 12.8 9.9-1.5 30.3-12.4 34.6-24.4 4.3-12 4.3-22.2 3-24.4-1.3-2.2-4.7-3.4-9.8-6z"/></svg>
-                    <span>WhatsApp</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Global Scanner Perimeter -->
-    <div class="perimeter-scanner">
-        <div class="scanner-beam"></div>
-    </div>
-
-    <canvas id="tech-canvas"></canvas>
-
-    <!-- Abstract Sci-fi Elements -->
-    <div class="abstract-glow glow-1"></div>
-    <div class="abstract-glow glow-2"></div>
-    <div class="abstract-grid"></div>
-
-    <header class="main-header">
-        <div class="logo-container">
-            <div class="logo-glow"></div>
-            <div class="glitch-text" style="font-family: var(--font-display); font-weight: 700; font-size: 2.5rem; line-height: 1; letter-spacing: 2px;">FORGE_</div>
-            <div class="logo-underline"></div>
-        </div>
-        <nav class="nav-links">
-            <a href="#insights" class="nav-link">INSIGHTS</a>
-            <a href="#portfolio" class="nav-link">PORTFOLIO</a>
-            <a href="#contact" class="btn btn-secondary nav-cta" style="padding: 8px 16px;">WORK WITH US</a>
-            <button id="auth-trigger" class="btn btn-primary" style="padding: 12px 24px; font-size: 1rem; letter-spacing: 1px;">LOGIN</button>
-            <div id="profile-container" style="position: relative; display: none;">
-                <div id="profile-trigger" class="profile-icon">?</div>
-                <div id="profile-menu" style="display: none; position: absolute; top: 110%; right: 0; background: var(--surface-container-low); border: 1px solid var(--outline-variant); width: 120px; z-index: 10;">
-                    <button id="logout-btn">[ LOGOUT ]</button>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 30 H80 L65 45 H40 V60 H60 L45 75 H20 V30 Z" fill="#E63946"/>
+                </svg>
+                <div class="logo-text">
+                    <span class="logo-name">FORGE</span>
+                    <span class="logo-sub">CREATIVE LABS</span>
                 </div>
             </div>
-        </nav>
+            <nav class="nav-links">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#process" class="nav-link">Process</a>
+                <a href="#work" class="nav-link">Work</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-primary open-contact-btn">Start a Project</a>
+            </div>
+        </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section level-0" id="hero-section">
-        <div class="hero-bg-image">
-            <img src="hero_bg.png" alt="FORGE digital fabrication abstract background">
-        </div>
-        <canvas id="hero-canvas"></canvas>
-        <div class="hero-content">
-            <h2 class="hero-eyebrow reveal-text" data-delay="0">WE FORGE YOUR VISION</h2>
-            <h1 class="display-lg hero-headline">
-                <span class="headline-word" style="--word-index: 0">DIGITAL</span>
-                <span class="headline-word" style="--word-index: 1">PRECISION.</span>
-                <br>
-                <span class="headline-word" style="--word-index: 2">EXACTLY</span>
-                <span class="headline-word" style="--word-index: 3">AS</span>
-                <span class="headline-word" style="--word-index: 4">IMAGINED.</span>
-            </h1>
-            <p class="hero-description reveal-text" data-delay="600">
-                We build high-performance apps, sites, and digital experiences that don't just meet standards — they
-                exceed expectations. Our process rejects generic templates in favor of custom builds tailored to your
-                specific goals.
-            </p>
-            <div class="hero-cta-group reveal-text" data-delay="800">
-                <a href="#portfolio" class="btn btn-primary btn-glow">INITIALIZE PORTFOLIO</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- INSIGHTS SECTION -->
-    <section id="insights" class="level-1">
-        <div class="asymmetrical-box" style="margin-bottom: 64px; max-width: 600px;">
-            <span class="label-sm label-glow">Module 1.0</span>
-            <h2 class="section-title">SYSTEM INSIGHTS</h2>
-            <p style="color: var(--secondary-container);">Operational intelligence from our latest builds. Scalable architecture powered by data, not guesswork.</p>
-        </div>
-
-        <div class="layout-grid layout-grid-3">
-            <!-- Article 1 -->
-            <article class="level-2 data-card ghost-border card-shine">
-                <div class="scanning-bg"></div>
-                <div class="card-content">
-                    <span class="label-sm">CASE STUDY</span>
-                    <h3 style="margin-top: 16px;">High-Conversion Interface Architecture</h3>
-                    <p style="font-size: 0.875rem; color: var(--secondary-container); margin-bottom: 24px;">Why precision engineering in UI demands clean geometric hierarchies to drive user action and brand authority.</p>
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <div class="hero-label">
+                    <span class="slashes">///</span>
+                    <span class="label-text">WE FORGE YOUR VISION</span>
+                    <span class="slashes">///</span>
                 </div>
-            </article>
-
-            <!-- Article 2 -->
-            <article class="level-2 data-card ghost-border card-shine" style="transform: translateY(32px);">
-                <div class="scanning-bg"></div>
-                <div class="card-content">
-                    <span class="label-sm">TECH STACK</span>
-                    <h3 style="margin-top: 16px;">Engineered for Velocity: Real-Time Data</h3>
-                    <p style="font-size: 0.875rem; color: var(--secondary-container); margin-bottom: 24px;">How we manage complex state arrays to ensure micro-second responsiveness in high-traffic applications.</p>
-                </div>
-            </article>
-
-            <!-- Article 3 -->
-            <article class="level-2 data-card ghost-border card-shine" style="background-color: var(--surface-bright);">
-                <div class="scanning-bg"></div>
-                <div class="card-content">
-                    <span class="label-sm">PERFORMANCE</span>
-                    <h3 style="margin-top: 16px;">Live Updates vs. Legacy Polling</h3>
-                    <p style="font-size: 0.875rem; color: var(--secondary-container); margin-bottom: 32px;">Leveraging Server-Side Events to maximize data freshness and reduce server load in modern React environments.</p>
-                    
-                    <!-- Server-Side Events Data Flow Visual -->
-                    <div class="data-flow-visual">
-                        <div class="flow-line"></div>
-                        <div class="flow-node active"></div>
-                        <div class="flow-node active" style="animation-delay: 0.5s;"></div>
-                        <div class="flow-node active" style="animation-delay: 1.0s;"></div>
-                        <div class="flow-node"></div>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <!-- PORTFOLIO / SERVICES SECTION -->
-    <section id="portfolio" class="level-0" style="padding: 120px 5%;">
-
-        <div class="services-header">
-            <div class="asymmetrical-box" style="max-width: 600px;">
-                <span class="label-sm label-glow">Module 2.0</span>
-                <h2 class="section-title">SERVICES</h2>
-                <p style="color: var(--secondary-container); margin-bottom: 0;">Precision-built digital solutions across three core disciplines. Select a node to inspect.</p>
-            </div>
-
-            <div class="service-filters" id="service-filters">
-                <div class="chip service-chip active" data-filter="all">ALL</div>
-                <div class="chip service-chip" data-filter="webdev">WEB DEV</div>
-                <div class="chip service-chip" data-filter="design">DESIGN</div>
-                <div class="chip service-chip" data-filter="consulting">CONSULTING</div>
-            </div>
-        </div>
-
-        <div class="services-container" id="services-container">
-            <!-- Service 1: Web Development -->
-            <div class="service-panel" data-category="webdev">
-                <div class="layout-grid" style="align-items: center;">
-                    <div class="service-image-container ghost-border">
-                        <img src="web_dev_hero.png" alt="Web Development - Full-stack engineering pipeline" class="service-image">
-                        <div class="service-image-overlay">
-                            <span class="label-sm" style="margin-bottom: 0;">SERVICE_NODE_01</span>
-                        </div>
-                        <div class="service-image-bar"></div>
-                    </div>
-                    <div class="service-info">
-                        <span class="label-sm" style="color: #ffffff;">FULL-STACK ENGINEERING</span>
-                        <h3 class="display-lg" style="font-size: 2.5rem;">WEB DEVELOPMENT</h3>
-                        <p style="color: var(--secondary-container); margin-bottom: 32px;">High-performance websites and web applications engineered from the ground up. From responsive landing pages to complex full-stack platforms — every line of code is optimized for speed, scalability, and surgical precision. We don't deploy templates. We build instruments.</p>
-                        <div style="display:flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;">
-                            <span class="chip">REACT</span>
-                            <span class="chip">NEXT.JS</span>
-                            <span class="chip">NODE.JS</span>
-                            <span class="chip">API DESIGN</span>
-                            <span class="chip">DATABASES</span>
-                        </div>
-                        <a href="#contact" class="btn btn-secondary" style="padding: 12px 24px;">REQUEST DEPLOYMENT →</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 2: UI/UX Design -->
-            <div class="service-panel" data-category="design">
-                <div class="layout-grid" style="align-items: center; background-color: var(--surface-container-low); margin: 0 -5%; padding: 64px 5%;">
-                    <div class="service-info" style="padding-right: 5%;">
-                        <span class="label-sm" style="color: #ff6b6b;">INTERFACE ARCHITECTURE</span>
-                        <h3 class="display-lg" style="font-size: 2.5rem;">UI / UX DESIGN</h3>
-                        <p style="color: var(--secondary-container); margin-bottom: 32px;">Premium interface design that merges aesthetic authority with behavioral intelligence. We craft intuitive, conversion-focused layouts grounded in modern design systems — where every pixel serves a purpose and every interaction tells a story. Visual identity, forged to convert.</p>
-                        <div style="display:flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;">
-                            <span class="chip">FIGMA</span>
-                            <span class="chip">PROTOTYPING</span>
-                            <span class="chip">DESIGN SYSTEMS</span>
-                            <span class="chip">MOTION DESIGN</span>
-                        </div>
-                        <a href="#contact" class="btn btn-secondary" style="padding: 12px 24px;">INITIATE DESIGN →</a>
-                    </div>
-                    <div class="service-image-container floating-panel">
-                        <img src="design_hero.png" alt="UI/UX Design - Interface architecture" class="service-image">
-                        <div class="service-image-overlay">
-                            <span class="label-sm" style="margin-bottom: 0;">DESIGN_FORGE_ACTIVE</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 3: Consulting -->
-            <div class="service-panel" data-category="consulting">
-                <div class="layout-grid" style="align-items: center;">
-                    <div class="service-image-container ghost-border">
-                        <img src="consulting_hero.png" alt="Digital Consulting - Strategy and analytics" class="service-image">
-                        <div class="service-image-overlay">
-                            <span class="label-sm" style="margin-bottom: 0;">STRATEGY_CORE_03</span>
-                        </div>
-                        <div class="service-image-bar" style="background: linear-gradient(90deg, #b91c1c, #ffffff);"></div>
-                    </div>
-                    <div class="service-info">
-                        <span class="label-sm" style="color: #b91c1c;">STRATEGIC INTELLIGENCE</span>
-                        <h3 class="display-lg" style="font-size: 2.5rem;">DIGITAL CONSULTING</h3>
-                        <p style="color: var(--secondary-container); margin-bottom: 32px;">Data-driven strategy that transforms business complexity into executable roadmaps. We audit your digital infrastructure, identify performance bottlenecks, and architect growth frameworks — powered by analytics, not assumptions. Your mission parameters, decoded and deployed.</p>
-                        <div style="display:flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;">
-                            <span class="chip">TECH AUDITS</span>
-                            <span class="chip">GROWTH STRATEGY</span>
-                            <span class="chip">SEO ENGINEERING</span>
-                            <span class="chip">ANALYTICS</span>
-                        </div>
-                        <a href="#contact" class="btn btn-secondary" style="padding: 12px 24px;">SCHEDULE BRIEFING →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="level-1" style="position: relative; overflow: hidden;">
-        <!-- scanning background effect -->
-        <div class="scanning-bg" style="opacity: 0.5;"></div>
-
-        <div class="layout-grid" style="position: relative; z-index: 1;">
-            <div>
-                <span class="label-sm label-glow">Module 3.0</span>
-                <h2 class="display-lg section-title" style="font-size: 3rem; text-transform: uppercase;">LET'S BUILD SOMETHING</h2>
-                <p style="color: var(--secondary-container); margin-bottom: 48px;">
-                    Got a project in mind? Tell us what you need. We'll get back to you within 48 hours with a plan that actually makes sense.
+                <h1 class="hero-title">
+                    <span class="line">DIGITAL PRECISION.</span>
+                    <span class="line highlight">EXACTLY AS IMAGINED.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    We build high-performance apps, sites, and digital experiences that don't just meet standards — they exceed expectations. Our process rejects generic templates in favor of custom builds tailored to your specific goals.
                 </p>
-
+                <div class="hero-cta">
+                    <a href="#work" class="btn btn-primary btn-large">
+                        <span class="btn-text">View Our Work</span>
+                        <svg class="btn-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+                        </svg>
+                    </a>
+                    <a href="#process" class="btn btn-outline btn-large">Our Process</a>
+                </div>
             </div>
-
-            <div class="level-2 floating-panel" style="padding: 48px;">
-                <form id="contact-form">
-                    <div class="input-group">
-                        <label class="form-label" for="identity" style="font-family: monospace;">[ YOUR NAME ]</label>
-                        <input type="text" id="identity" name="identity" required
-                            placeholder="What should we call you?">
-                        <span class="error-text">We need your name to get started.</span>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="form-label" for="vector" style="font-family: monospace;">[ YOUR EMAIL ]</label>
-                        <input type="email" id="vector" name="vector" required placeholder="you@example.com">
-                        <span class="error-text">Please enter a valid email address.</span>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="form-label" for="payload" style="font-family: monospace;">[ PROJECT DETAILS ]</label>
-                        <textarea id="payload" name="payload" rows="4" required
-                            placeholder="What are you building? Tell us about your goals, timeline, and budget..."></textarea>
-                        <span class="error-text">Let us know what you have in mind.</span>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary glitch-btn" data-target-text="<sending_message>" data-original-text="SEND MESSAGE" style="width: 100%;">SEND MESSAGE</button>
-                    <div id="form-success"
-                        style="display:none; color: var(--primary); margin-top: 16px; font-weight: 500; text-align: center;">
-                        MESSAGE SENT. WE'LL BE IN TOUCH SOON.
-                    </div>
-                </form>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <span class="scroll-text">SCROLL EXCEPTION</span>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="level-2" style="background-color: var(--surface);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-            <div>
-                <span class="label-sm footer-status"><span class="status-dot"></span> SYSTEM STATUS: ONLINE</span>
-                <div style="color: var(--secondary-container); font-size: 0.875rem;">© 2026 FORGE LLC</div>
+        <section class="services" id="services">
+            <div class="container block-padding">
+                <div class="section-header">
+                    <div class="badge">CAPABILITIES</div>
+                    <h2 class="section-title">ENGINEERED FOR IMPACT</h2>
+                    <p class="section-desc">We leave the templates to the amateurs. Every line of code, every pixel is purposefully architected for speed, scale, and conversion.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="1.5" stroke-linecap="square">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Bespoke Web Platforms</h3>
+                        <p class="card-text">High-performance custom sites built from the ground up to represent your brand's unique digital footprint flawlessly.</p>
+                        <div class="card-border"></div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="1.5" stroke-linecap="square">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">App Development</h3>
+                        <p class="card-text">Fluid, responsive mobile and web applications optimized for exceptional user engagement and seamless state management.</p>
+                        <div class="card-border"></div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="1.5" stroke-linecap="square">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Digital Experiences</h3>
+                        <p class="card-text">Immersive, kinetic interfaces combining advanced WebGL, kinetic CSS, and smooth interaction timelines.</p>
+                        <div class="card-border"></div>
+                    </div>
+                </div>
             </div>
-            <div class="footer-terminal">
-                END OF LINE<span class="terminal-cursor">_</span>
+        </section>
+
+        <section class="process" id="process">
+            <div class="container block-padding">
+                <div class="process-wrapper">
+                    <div class="process-content">
+                        <div class="badge">METHODOLOGY</div>
+                        <h2 class="section-title">THE FORGE PROTOCOL</h2>
+                        <p class="section-desc">We follow a strict, unyielding process to ensure every project meets our standards of absolute digital precision.</p>
+                    </div>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-num">01</div>
+                            <div class="step-details">
+                                <h3 class="step-title">Blueprint</h3>
+                                <p class="step-text">Strategic architecture and wireframing. Aligning business goals with scalable technical foundations.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">02</div>
+                            <div class="step-details">
+                                <h3 class="step-title">Forge</h3>
+                                <p class="step-text">Relentless execution. We hand-code the logic and craft the aesthetics pixel by pixel.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">03</div>
+                            <div class="step-details">
+                                <h3 class="step-title">Deploy</h3>
+                                <p class="step-text">Rigorous testing, optimization, and a seamless global launch that leaves zero margin for error.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta" id="contact">
+            <div class="container">
+                <div class="cta-box">
+                    <div class="cta-bg-fx"></div>
+                    <h2 class="cta-title">READY TO BUILD SOMETHING EXCEPTIONAL?</h2>
+                    <p class="cta-text">Stop settling for the standard. Let's engineer a digital experience that puts you in a hyper-competitive category of one.</p>
+                    <a href="#" class="btn btn-primary btn-large cta-btn open-contact-btn">Initiate Project</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 30 H80 L65 45 H40 V60 H60 L45 75 H20 V30 Z" fill="#E63946"/>
+                        </svg>
+                        <div class="logo-text">
+                            <span class="logo-name">FORGE</span>
+                            <span class="logo-sub">CREATIVE LABS</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Digital Precision. Exactly As Imagined.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-col">
+                        <h4>Navigation</h4>
+                        <a href="#services">Services</a>
+                        <a href="#process">Process</a>
+                        <a href="#work">Work</a>
+                    </div>
+                    <div class="link-col">
+                        <h4>Social</h4>
+                        <a href="https://x.com/ForgeCreative26" target="_blank">X (Twitter)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Forge Creative Labs. All rights reserved.</p>
+                <div class="legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- COMMAND CENTER MODULES -->
+    <!-- Toast Notification -->
+    <div id="toast-container" class="toast-container"></div>
 
-    <!-- Access Portal (Module 0.0) -->
-    <div id="auth-portal" class="overlay-modal" style="display: none;">
-        <div class="auth-module">
-            <button id="close-auth" class="close-btn">[X]</button>
-            <div id="auth-login-view">
-                <div class="auth-header">CLIENT PORTAL / SECURE ACCESS</div>
-                <p class="auth-subtext">Access your secure client profile to communicate with the Forge engineering team.</p>
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contact-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 class="modal-title">INITIATE CONNECTION</h2>
+            <p class="modal-desc">Provide your project parameters. This will be transmitted directly to our secure inbox.</p>
+            
+            <!-- Replace 'forgecreative26@gmail.com' with the actual Gmail address -->
+            <form action="https://formsubmit.co/forgecreative26@gmail.com" method="POST" class="contact-form">
+                <!-- Disable Captcha for smoother UX -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="New Project Inquiry - Forge Creative Labs">
+                <!-- Redirect back to the site instead of formsubmit default page -->
+                <input type="hidden" name="_next" value="">
                 
-                <form id="login-form" style="display: flex; flex-direction: column; gap: 16px;">
-                    <div class="vault-input-group">
-                        <label class="vault-label" for="login-vector">[ USERNAME ]</label>
-                        <input type="text" id="login-vector" class="vault-input" placeholder="Enter your username" required>
-                    </div>
-                    <div class="vault-input-group">
-                        <label class="vault-label" for="login-pass">[ PASSWORD ]</label>
-                        <input type="password" id="login-pass" class="vault-input" placeholder="Enter your password" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="margin-top: 16px; width: 100%; font-size: 0.875rem; letter-spacing: 2px;">LOGIN</button>
-                    <div style="text-align: center; margin-top: 16px;">
-                        <a href="#" id="show-register-link" style="color: var(--secondary-container); font-family: monospace; font-size: 0.75rem; text-decoration: none;">&lt;CREATE_NEW_ACCOUNT&gt;</a>
-                    </div>
-                </form>
-            </div>
-
-            <div id="auth-register-view" style="display: none;">
-                <div class="auth-header">CLIENT FABRICATION</div>
-                <p class="auth-subtext">Create a secure client profile to establish communications with the Forge engineering team.</p>
-                
-                <form id="register-form" style="display: flex; flex-direction: column; gap: 16px;">
-                    <div class="vault-input-group">
-                        <label class="vault-label" for="reg-nom">[ USERNAME ]</label>
-                        <input type="text" id="reg-nom" class="vault-input" placeholder="Enter your username" required>
-                    </div>
-                    <div class="vault-input-group">
-                        <label class="vault-label" for="reg-pass">[ PASSWORD ]</label>
-                        <input type="password" id="reg-pass" class="vault-input" placeholder="Choose a secure password" required>
-                    </div>
-                    <div class="vault-input-group">
-                        <label class="vault-label" for="reg-pass-confirm">[ CONFIRM PASSWORD ]</label>
-                        <input type="password" id="reg-pass-confirm" class="vault-input" placeholder="Confirm your password" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="margin-top: 16px; width: 100%; font-size: 0.875rem; letter-spacing: 2px;">CREATE ACCOUNT</button>
-                    <div style="text-align: center; margin-top: 16px;">
-                        <a href="#" id="show-login-link" style="color: var(--secondary-container); font-family: monospace; font-size: 0.75rem; text-decoration: none;">&lt;LOG_INTO_EXISTING_ACCOUNT&gt;</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Post-Auth Operations Hub / FB Style Comms Panel -->
-    <div id="comms-widget" class="comms-panel" style="display: none;">
-        <div class="comms-header" style="justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 32px; height: 32px; background: var(--surface-container-low); display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid var(--outline-variant);">FA</div>
-                <div style="display: flex; flex-direction: column;">
-                    <div style="font-family: var(--font-body); color: var(--primary); font-size: 0.875rem; font-weight: bold;">Forge Admin</div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%;"></div>
-                        <span style="font-family: var(--font-body); color: var(--secondary-container); font-size: 0.65rem;">Active now</span>
-                    </div>
+                <div class="form-group">
+                    <label for="name">Name / Alias</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name">
                 </div>
-            </div>
-            <div style="display: flex; gap: 12px; align-items: center;">
-                <button id="call-comms" class="icon-btn" title="Initiate Secure Voice Uplink" style="color: var(--primary); font-size: 1.1rem; line-height: 1;">📞</button>
-                <button id="maximize-comms" class="icon-btn" style="color: var(--primary); font-size: 1.1rem; line-height: 1;">⛶</button>
-            </div>
-        </div>
-        
-        <!-- Voice Call Overlay -->
-        <div id="call-overlay" style="display: none; position: absolute; inset: 0; top: 57px; background: rgba(11, 12, 16, 0.95); backdrop-filter: ; z-index: 10; flex-direction: column; align-items: center; justify-content: center;">
-            <div id="call-status-text" style="color: var(--primary); font-family: monospace; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 24px;">ESTABLISHING UPLINK...</div>
-            <div class="voice-bars" style="display: flex; gap: 6px; height: 60px; align-items: center; justify-content: center; margin-bottom: 32px; opacity: 0; transition: opacity 0.3s;">
-                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-            </div>
-            <div style="display: none; gap: 24px; margin-bottom: 32px;" id="user-call-extras">
-                <button class="call-mute-btn action-circle-btn" style="background: #111; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), inset 0 -4px 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6); border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(0);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -4px 10px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='inset 0 2px 4px rgba(255,255,255,0.05), inset 0 -4px 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6)';">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@system.tld">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Project Parameters & Vision</label>
+                    <textarea id="message" name="message" required rows="5" placeholder="Describe the digital experience you want to forge..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-large btn-full">
+                    <span>Transmit Message</span>
                 </button>
-                <button class="call-speaker-btn action-circle-btn" style="background: #111; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), inset 0 -4px 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6); border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(0);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -4px 10px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='inset 0 2px 4px rgba(255,255,255,0.05), inset 0 -4px 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6)';">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                </button>
-            </div>
-            <button id="end-call-btn" class="uplink-action-btn" style="display: block; background: #000; border: 1px solid #ef4444; color: #ef4444; border-radius: 8px; padding: 14px 40px; font-weight: bold; font-family: monospace; font-size: 1rem; letter-spacing: 2px; box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;" onmouseover="this.style.background='#ef4444'; this.style.color='#000'; this.style.boxShadow='0 12px 30px rgba(239, 68, 68, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#000'; this.style.color='#ef4444'; this.style.boxShadow='0 8px 24px rgba(239, 68, 68, 0.15)'; this.style.transform='translateY(0)';">[ CANCEL ]</button>
-        </div>
-
-        <div id="client-progress-container" style="padding: 12px 16px; background: rgba(0, 0, 0, 0.4); border-bottom: 1px solid var(--outline-variant); display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-family: monospace; color: var(--secondary-container); letter-spacing: 1px;">
-                <span>PROJECT STATUS</span>
-                <span id="client-progress-text" style="color: var(--primary);">NOT STARTED</span>
-            </div>
-            <div class="progress-track" style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative; overflow: hidden;">
-                <div id="client-progress-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #ef4444, #f87171); border-radius: 3px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: rgba(255,255,255,0.3); text-transform: uppercase;">
-                <span>Initiated</span>
-                <span>In Progress</span>
-                <span>Review</span>
-                <span>Complete</span>
-            </div>
-        </div>
-
-        <div class="comms-body" id="comms-feed" style="background: var(--surface);">
-            <!-- Feed drops the heavy system messages, uses left/right chat bubble alignment -->
-            <div class="chat-bubble admin-bubble" style="margin-top: 8px;">Forge systems online. How can we deploy?</div>
-        </div>
-        
-        <div class="comms-footer" id="user-comms-footer" style="display: flex; gap: 8px; align-items: center; padding: 12px; background: var(--surface-container-low);">
-            <button id="user-attach-btn" class="icon-btn" style="color: var(--secondary-container); font-size: 1.1rem; flex-shrink: 0;" title="Attach File">📎</button>
-            <input type="file" id="user-file-input" style="display: none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
-            <input type="text" id="direct-transmission" placeholder="Type a message..." class="vault-input" style="flex-grow: 1; padding: 8px; font-size: 0.875rem; border: none; background: transparent;">
-            <button id="user-voice-btn" class="icon-btn" style="color: var(--secondary-container); font-size: 1.1rem; flex-shrink: 0;" title="Voice Note">🎤</button>
-            <button id="fb-send-btn" class="btn btn-primary" style="padding: 8px 12px; font-size: 0.75rem; flex-shrink: 0;">SEND</button>
-        </div>
-        <div id="user-recording-overlay" style="display: none; align-items: center; justify-content: space-between; padding: 12px; background: var(--surface-container-low); border-top: 1px solid var(--outline-variant); position: absolute; bottom: 0; left: 0; right: 0; height: 50px; z-index: 20;">
-            <div style="display: flex; align-items: center; gap: 12px; color: var(--error); font-weight: bold; animation: comms-pulse 1s infinite alternate;">
-                <div style="width: 10px; height: 10px; background: var(--error); border-radius: 50%;"></div> RECORDING...
-            </div>
-            <div style="font-family: monospace; color: var(--primary);" id="user-recording-timer">0:00</div>
-            <div style="display: flex; gap: 8px;">
-                <button id="user-cancel-voice" class="icon-btn" style="color: var(--error);" title="Cancel">✖</button>
-                <button id="user-send-voice" class="btn btn-primary" style="padding: 4px 12px; font-size: 0.75rem; background: var(--error); border-color: var(--error); color: #fff;">SEND</button>
-            </div>
+            </form>
         </div>
     </div>
-    </div>
-    <div class="social-floats">
-        <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="social-float-btn wa-float">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#fff">
-                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157.1zM224 430c-30.3 0-60.6-8.2-86.4-23.7l-6.2-3.7-64.2 16.8 17-62.6-4.1-6.5C63.8 322 54 289.4 54 254.9c0-93.7 76.5-170.2 170.2-170.2 45.4 0 88.1 17.7 120.2 49.8 32 32.1 49.7 74.8 49.7 120.2 0 93.8-76.5 170.3-170.1 170.3zm93.4-127.3c-5.1-2.6-30.3-15-35-16.7-4.7-1.7-8.1-2.6-11.5 2.6-3.4 5.1-13.2 16.7-16.2 20.1-3 3.4-6 3.8-11.1 1.3-29.4-14.7-49.3-26.6-69-59.6-1.9-3.2 1.9-2.9 6.8-12.7s11.5-16.2 13.2-19.6c1.7-3.4 .9-6.4-.4-9-1.3-2.6-11.5-27.8-15.8-38.1-4.1-10.2-8.3-8.8-11.5-9-3-.1-6.4-.1-9.8-.1s-8.9 1.3-13.6 6.4c-4.7 5.1-18 17.5-18 42.7s18.4 49.5 20.9 52.9c2.6 3.4 36.1 55.1 87.4 77.2 32.5 14 45.3 15.2 61.5 12.8 9.9-1.5 30.3-12.4 34.6-24.4 4.3-12 4.3-22.2 3-24.4-1.3-2.2-4.7-3.4-9.8-6z"/>
-            </svg>
-        </a>
-        <a href="https://t.me/Argon_xrpl" target="_blank" rel="noopener noreferrer" class="social-float-btn tg-float">
-            <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-                <g fill="#fff">
-                    <path d="m98 175c-4 0-3-1-4-4l-11-37 87-54c4-2 8 1 5 4l-75 68v39l22-19 36 26c6 3 11 2 13-5l23-110c2-9-3-13-9-11l-140 54c-8 3-8 8-1 10l36 11 17 56z"/>
-                    <path opacity="0.8" d="m98 175 16-16-16-11z"/>
-                    <path opacity="0.9" d="m114 159 47 34-45-70z"/>
-                </g>
-            </svg>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61575363518388" target="_blank" rel="noopener noreferrer" class="social-float-btn fb-float">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="#fff"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
-        </a>
-        <a href="https://x.com/ForgeCreative26" target="_blank" rel="noopener noreferrer" class="social-float-btn x-float">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.6 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-        </a>
-    </div>
 
-    <!-- Firebase Core & Database -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    <!-- State Multiplexer -->
-    <script src="firebase-sync.js"></script>
-    <script src="main.js"></script>
+    <script src="js/main.js"></script>
 </body>
-
 </html>
