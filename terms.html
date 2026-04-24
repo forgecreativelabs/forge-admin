@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Forge Creative Labs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="cursor-glow" style="display: none;"></div>
+
+    <header class="navbar" style="background: rgba(5,5,5,0.98);">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 30 H80 L65 45 H40 V60 H60 L45 75 H20 V30 Z" fill="#E63946"/>
+                </svg>
+                <div class="logo-text">
+                    <a href="index.html" style="text-decoration: none; display: flex; flex-direction: inherit; gap: inherit; color: inherit;">
+                        <span class="logo-name">FORGE</span>
+                        <span class="logo-sub">CREATIVE LABS</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="index.html#process" class="nav-link">Process</a>
+                <a href="index.html#work" class="nav-link">Work</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="https://x.com/ForgeCreative26" target="_blank" class="btn btn-primary">Start a Project</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-content" style="padding-top: 150px; padding-bottom: 80px; min-height: 80vh;">
+        <div class="container" style="max-width: 800px;">
+            <div class="badge" style="margin-bottom: 20px;">LAST UPDATED: 2026</div>
+            <h1 class="hero-title" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">TERMS OF SERVICE</h1>
+            
+            <div class="legal-text" style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
+                <h3 style="color: var(--text-primary); font-family: var(--font-heading); margin: 30px 0 15px 0;">1. General Agreement</h3>
+                <p style="margin-bottom: 15px;">By accessing the Forge Creative Labs website or engaging our development services, you explicitly consent to these Terms of Service. If you do not agree with the rules outlined in this digital contract, you must sever your connection with our platform immediately.</p>
+
+                <h3 style="color: var(--text-primary); font-family: var(--font-heading); margin: 30px 0 15px 0;">2. Development & Delivery Protocol</h3>
+                <p style="margin-bottom: 15px;">We build bespoke, high-performance web applications and digital interfaces. Project timelines, deliverables, and architecture blueprints are mutually agreed upon before any codebase initialization. Delays in client feedback or deviations from the original scope parameter will result in dynamic timeline adjustments.</p>
+
+                <h3 style="color: var(--text-primary); font-family: var(--font-heading); margin: 30px 0 15px 0;">3. Intellectual Property Rights</h3>
+                <p style="margin-bottom: 15px;">Upon full financial clearance of a project invoice, the developed source code, custom assets, and structural intellectual property are irrevocably transferred to the client. However, Forge Creative Labs retains the universal right to display UI renders, project descriptions, and analytical case studies in our digital portfolio or marketing channels, unless a strict Non-Disclosure Agreement (NDA) is executed prior to launch.</p>
+
+                <h3 style="color: var(--text-primary); font-family: var(--font-heading); margin: 30px 0 15px 0;">4. Limitation of Liability</h3>
+                <p style="margin-bottom: 15px;">We engineer our systems with digital precision to ensure minimal fail states. However, Forge Creative Labs assumes zero liability for direct or indirect system failures, third-party API deprecations, or server-side exploits that occur post-deployment outside of our controlled maintenance jurisdiction.</p>
+
+                <h3 style="color: var(--text-primary); font-family: var(--font-heading); margin: 30px 0 15px 0;">5. Dispute Resolution</h3>
+                <p style="margin-bottom: 15px;">Any technical or financial disputes arising from these terms will be resolved through amicable digital mediation. If a resolution cannot be met, normal legal jurisdiction governing our primary operating zone will apply.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 30 H80 L65 45 H40 V60 H60 L45 75 H20 V30 Z" fill="#E63946"/>
+                        </svg>
+                        <div class="logo-text">
+                            <span class="logo-name">FORGE</span>
+                            <span class="logo-sub">CREATIVE LABS</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Digital Precision. Exactly As Imagined.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-col">
+                        <h4>Navigation</h4>
+                        <a href="index.html#services">Services</a>
+                        <a href="index.html#process">Process</a>
+                        <a href="index.html#work">Work</a>
+                    </div>
+                    <div class="link-col">
+                        <h4>Social</h4>
+                        <a href="https://x.com/ForgeCreative26" target="_blank">X (Twitter)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Forge Creative Labs. All rights reserved.</p>
+                <div class="legal">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div id="toast-container" class="toast-container"></div>
+    <script src="js/main.js"></script>
+</body>
+</html>
