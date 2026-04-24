@@ -899,6 +899,9 @@ footer {
     .hero-cta .btn {
         width: 100%;
     }
+    .scroll-indicator {
+        display: none;
+    }
     .services-grid {
         grid-template-columns: 1fr;
     }
